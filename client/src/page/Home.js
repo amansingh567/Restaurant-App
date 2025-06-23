@@ -1,71 +1,61 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import DeliveryImage from "../assest/img/delivery.png";
-import HeaderProduct from "../components/HeaderProduct";
-import { headerData } from "../database/headerData";
 import { Link } from "react-router-dom";
-const Home = () => {
-  const notHaveData = new Array(7).fill(null)
-    // console.log(notHaveData)
 
+const Home = () => {
+  const notHaveData = new Array(7).fill(null);
   const productItem = useSelector((state) => state.productItem.productItem);
   const productLoading = useSelector(
     (state) => state.productItem.productLoading
   );
 
-  // console.log(productItem)
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 overflow-hidden p-2  md:p-4">
-      <div className="flex-1 flex flex-col items-start  justify-center gap-5 py-3">
-        <div className="flex items-center gap-2 justify-center bg-red-200 py-1 px-3 rounded-full">
-          <p className="text-sm font-semibold text-red-800">Bike Delivery</p>
-          <div className="w-7 h-7 bg-white rounded-full overflow-hidden drop-shadow-xl">
-            <img
-              src={DeliveryImage}
-              className="w-full h-full object-contain"
-              alt="Delivery"
-            />
+    <div className="w-full flex justify-center bg-white py-10 px-4">
+      <div className="grid overflow-hidden p-4 md:p-8 max-w-6xl w-full bg-gradient-to-br from-white to-red-50 rounded-3xl shadow-2xl">
+        <div className="flex flex-col items-start justify-center gap-6">
+          {/* Bike Delivery Tag */}
+          <div className="flex items-center gap-3 bg-red-100 py-1.5 px-4 rounded-full shadow-md">
+            <p className="text-sm font-semibold text-red-700 uppercase tracking-wide">Bike Delivery</p>
+            <div className="w-8 h-8 bg-white rounded-full overflow-hidden shadow-md">
+              <img
+                src={DeliveryImage}
+                className="w-full h-full object-contain"
+                alt="Delivery"
+              />
+            </div>
           </div>
-        </div>
 
-        <p className="text-4xl font-bold tracking-wider text-headingColor md:text-5xl lg:text-6xl">
-         Foodily
-          <span className="text-red-600 text-4xl md:text-5xl lg:text-6xl">
-            {" "}
-            Enjoy cravings
-          </span>
-        </p>
+          {/* Headline */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-headingColor leading-tight">
+            Foody –{" "}
+            <span className="text-red-500 block mt-2 md:inline">
+              Enjoy Your Cravings Like Never Before
+            </span>
+          </h1>
 
-        <p className="text-base text-color text-center md:text-left md:w-4/5">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi
-          laboriosam dolor, voluptas aliquid expedita doloremque? Ab minima
-          reiciendis delectus in deleniti. Quas fugiat rem ipsam repudiandae
-          illo ducimus non ad!
-        </p>
+          {/* Paragraphs */}
+          <p className="text-lg md:text-xl text-gray-700 md:w-4/5 leading-relaxed">
+            Why settle for boring meals when you can explore an entire world of flavor at your fingertips? Foodily connects you with the best kitchens in town — whether you're working late, binge-watching shows, or just feeling snacky at 2 AM.
+          </p>
 
-        <Link to={"/menu"}
-          type="button"
-          className="bg-gradient-to-br from-red-400 to-red-500 w-full md:w-auto px-4 py-2 rounded-lg hover:shadow-lg transition-all ease-in-out font-semibold  duration-300 flex justify-center md:justify-self-start hover:scale-105 "
-        >
-          Order Now
-        </Link>
-      </div>
+          <p className="text-lg md:text-xl text-gray-700 md:w-4/5 leading-relaxed">
+            Customize your orders, track your delivery live, and enjoy lightning-fast service with zero stress. From comfort food to gourmet dishes, we’ve got your cravings covered — morning to midnight.
+          </p>
 
-      <div className="p-10 md:pt-10  flex-1 designHomeRight h-full px-2 ">
-        <div className="flex flex-wrap justify-center items-center gap-1 md:gap-6">
-          {headerData &&
-            headerData.map((el) => {
-              return (
-                <HeaderProduct
-                  key={el.id}
-                  id={el.id}
-                  name={el.name}
-                  img={el.img}
-                  decs={el.decs}
-                  price={el.price}
-                />
-              );
-            })}
+          {/* Highlights */}
+          <div className="flex flex-col md:flex-row gap-4 font-bold text-lg text-red-700">
+            <span>🍴 Find it. Crave it. Foody it.</span>
+            <span>🚀 Hungry? Let your tastebuds take the lead.</span>
+          </div>
+
+          {/* Call to Action */}
+          <Link
+            to={"/menu"}
+            className="bg-gradient-to-br from-red-400 to-red-600 text-white text-lg font-semibold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transform transition duration-300 ease-in-out"
+          >
+            🍽️ Order Now
+          </Link>
         </div>
       </div>
     </div>
