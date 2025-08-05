@@ -67,7 +67,7 @@ app.post("/create-checkout-session", async (req, res) => {
 
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_eb4a5f8d2421cf7cafafc42199c2f362e38a3d53865f35a5c6066cb25c31c439";
+const endpointSecret = process.env.ENDPOINT_SECRET;
 
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
   const sig = request.headers['stripe-signature'];

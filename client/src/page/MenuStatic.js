@@ -10,12 +10,14 @@ const MenuStatic = () => {
   const dispatch = useDispatch();
   const productItem = useSelector((state) => state.productItem.productItem);
   const productLoading = useSelector(state => state.productItem.productLoading)
+  const [p,setP] = useState(productItem);
 
   useEffect(() => {
     (async () => {
       try {
         const data = await getAllProductItems();
         setProducts(data)
+        setP(data)
         dispatch(setProductItem(data));
       } catch (error) {
         console.log(error);
@@ -27,10 +29,12 @@ const MenuStatic = () => {
   const [inputSearch,setInputSearch] = useState('');
   const [products,setProducts] = useState([])
 
+  
   const methodForSearch = ()=>{
     if(inputSearch.length > 0){
+      
       const filteredProducts= products.filter(product =>product.title.toLowerCase().includes(inputSearch.toLowerCase()));
-      setProducts(filteredProducts)
+      setP(filteredProducts)
       
     }
     else{
@@ -79,7 +83,7 @@ const MenuStatic = () => {
         )
         : 
         (
-          products.map((el) => {
+          p.map((el) => {
             return  <RenderFilter
                 key={el.id + "menu"}
                 id={el.id}
