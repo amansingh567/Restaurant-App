@@ -1,15 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import DeliveryImage from "../assest/img/delivery.png";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const notHaveData = new Array(7).fill(null);
-  const productItem = useSelector((state) => state.productItem.productItem);
-  const productLoading = useSelector(
-    (state) => state.productItem.productLoading
-  );
-
   return (
     <div className="w-full flex justify-center bg-white py-10 px-4">
       <div className="grid overflow-hidden p-4 md:p-8 max-w-6xl w-full bg-gradient-to-br from-white to-red-50 rounded-3xl shadow-2xl">
@@ -36,11 +28,11 @@ const Home = () => {
 
           {/* Paragraphs */}
           <p className="text-lg md:text-xl text-gray-700 md:w-4/5 leading-relaxed">
-            Why settle for boring meals when you can explore an entire world of flavor at your fingertips? Foodily connects you with the best kitchens in town — whether you're working late, binge-watching shows, or just feeling snacky at 2 AM.
+            Why settle for boring meals when you can explore an entire world of flavor at your fingertips? Foody connects you with the best kitchens in town — whether you're working late, binge-watching shows, or just feeling snacky at 2 AM.
           </p>
 
           <p className="text-lg md:text-xl text-gray-700 md:w-4/5 leading-relaxed">
-            Customize your orders, track your delivery live, and enjoy lightning-fast service with zero stress. From comfort food to gourmet dishes, we’ve got your cravings covered — morning to midnight.
+            Customize your orders, and enjoy lightning-fast service with zero stress. From comfort food to gourmet dishes, we’ve got your cravings covered — morning to midnight.
           </p>
 
           {/* Highlights */}

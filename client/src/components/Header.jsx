@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import Logo from "./Logo";
 
 //Google Auth
@@ -6,20 +5,12 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../firebase.config";
 
 // import Logo from "../assest/logo.svg"
-import {
-  MdShoppingCart,
-  MdAccountCircle,
-  MdLogout,
-  MdAddCircleOutline,
-  MdVerified,
-} from "react-icons/md";
+import { MdShoppingCart, MdAccountCircle, MdLogout, MdAddCircleOutline, MdVerified} from "react-icons/md";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-
+import { Link , NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoginGoogle } from "../redux/userSlice";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 
 const Header = () => {
   //cart product item
@@ -42,6 +33,8 @@ const Header = () => {
         user: { refreshToken, providerData },
       } = await signInWithPopup(firebaseAuth, provider);
 
+      // console.log(providerData)
+
       dispatch(
         setLoginGoogle({
           name: providerData[0].displayName,
@@ -63,7 +56,8 @@ const Header = () => {
           token: refreshToken,
         })
       );
-    } else {
+    } 
+    else {
       setIsLogin((preve) => !preve);
     }
   };

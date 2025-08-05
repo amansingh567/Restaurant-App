@@ -1,26 +1,13 @@
 import React, { useState } from "react";
 import { MdDriveFileRenameOutline, MdOutlineDelete } from "react-icons/md";
 import { categories } from "../database/headerData";
-import {
-  MdCloudUpload,
-  MdAccountBalanceWallet,
-  MdSource,
-} from "react-icons/md";
+import { MdCloudUpload, MdAccountBalanceWallet, MdSource, } from "react-icons/md";
 import { FaRupeeSign } from "react-icons/fa";
-
-import { BiDollar } from "react-icons/bi";
 import axios from 'axios'
 import Loading from "../utils/Loading";
-import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable, } from "firebase/storage";
 import { storage } from "../firebase.config";
-import { saveProductItem } from "../utils/firebaseFunctions";
 import RecentUpload from "./RecentUpload";
 
 const CreateContainer = () => {
@@ -32,8 +19,9 @@ const CreateContainer = () => {
     productPrice: "",
     productDesc: "",
   });
+  
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const [msg, setMsg] = useState("Amit Prajapti");
+  const [msg, setMsg] = useState("All fields are required");
   const [danger, setDanger] = useState("success");
   const [isMsg, setIsMsg] = useState(false);
 
@@ -51,7 +39,7 @@ const CreateContainer = () => {
   const uploadImage = (e) => {
     setIsLoadingImage(true);
     const file = e.target.files[0];
-    console.log(file);
+    // console.log(file);
 
     const storegeRef = ref(storage, `Images/${Date.now()}-${file.name}`);
     const uploadImage = uploadBytesResumable(storegeRef, file);
@@ -61,7 +49,7 @@ const CreateContainer = () => {
       (snapshot) => {
         const uploadProgress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(uploadProgress);
+        // console.log(uploadProgress);
       },
       (error) => {
         console.log(error);
@@ -191,7 +179,7 @@ const CreateContainer = () => {
     });
   }
 
-  console.log(product);
+  // console.log(product);
   return (
     <div className="py-5 md:py-10">
       <div className="w-11/12 max-w-2xl m-auto  bg-slate-100 p-4 rounded shadow-md relative py-10 box-border">

@@ -32,7 +32,7 @@ const getAllProduct = async(req,res)=>{
             return res.status(200).send(products);
         }
     } catch (error) {
-        return res.status(502).send("Internal server error");
+        return res.status(500).send("Internal server error");
         
     }
 }

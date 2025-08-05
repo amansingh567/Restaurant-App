@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState , useEffect} from "react";
 import { MdOutlineStarPurple500, MdOutlineStarHalf } from "react-icons/md";
 import { FaCartPlus } from "react-icons/fa";
 import Menu from "../components/Menu";
@@ -11,11 +11,16 @@ const MenuPage = () => {
   const params = useParams()
   const navigate = useNavigate()
 
-  const data = productItem.filter(product => product.id ===  params.productId ,[])[0]
-  // console.log(data)
+  const [data, setData] = useState({});
+  useEffect(()=>{
+    const prod = productItem.find(product => product.id ===  params.productId )
+    if(prod){
+      setData(prod)
+    }
+    console.log("prod",prod)
+  },)
 
   const dispatch = useDispatch()
-  const cartProduct = useSelector(state => state.cartProduct)
 
   const handleCartProduct = (e)=>{
     e.stopPropagation()

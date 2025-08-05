@@ -9,24 +9,23 @@ import RenderFilter from "./renderFilter";
 import {FaFilter} from "react-icons/fa"
 import Loading from "../utils/Loading";
 
-const Menu = ({heading="Our Menu",filterbyProps="fruits"}) => {
+const Menu = ({heading="Our Menu",filterbyProps="Snacks"}) => {
   const productItem = useSelector((state) => state.productItem.productItem);
   const productLoading = useSelector(state => state.productItem.productLoading)
-    // console.log(productLoading)
   const allCategory = [
     ...new Set(
       productItem.map((el) => el.category)
     ),
   ];
   const [filterBy, setFilterBy] = useState(filterbyProps);
-
+  
   const data = useMemo(
     () => productItem,
     [productItem,filterbyProps]
   );
+  const [filterData, setFilderData] = useState(data);
 
   // console.log(data)
-  const [filterData, setFilderData] = useState(data);
 
   useEffect(() => {
     setFilderData(

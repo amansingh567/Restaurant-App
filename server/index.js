@@ -10,15 +10,18 @@ app.use(cors({
   origin: "*",
   credentials: true
 }));
+
 app.use(express.json());
 app.use(express.static("public"));
 const PORT = process.env.PORT || 8080;
 
 const FRONTEND = process.env.DOMAIN
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 app.post('/product',addProduct)
 app.get('/product',getAllProduct);
+
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 app.post("/create-checkout-session", async (req, res) => {
   console.log(req.body);
     try{
@@ -112,7 +115,8 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
 
 // app.listen(PORT, () => console.log(`Server Running on PORT ${PORT}`))
 mongoose.connect(`${process.env.MONGO_URL}/RESTAURANT`)
-.then(()=>{console.log("Database connected succesfully")
+.then(()=>{
+  console.log("Database connected succesfully")
   app.listen(PORT, () => console.log("Running on port " + PORT));
 
 })

@@ -8,15 +8,13 @@ import { incrementQtyProduct, setCartProduct } from '../redux/cartSlice'
 const RenderFilter = ({id,img,name,decs,price}) => {
   
   const productItem = useSelector(state => state.productItem.productItem)
-  // console.log(productItem)
   const dispatch = useDispatch()
   const cartProduct = useSelector(state => state.cartProduct)
-  const data = productItem.filter(product => product.id === id,[])[0]
+  const data = productItem.find(product => product.id === id);
 
   const handleCartProduct = (e)=>{
     e.stopPropagation()
     e.preventDefault()
-    console.log(cartProduct)
     const checkExistence = cartProduct.cartProductItem.filter(temp => temp.id ===id);
     console.log("check - ",checkExistence)
     if(checkExistence.length !== 0 ){

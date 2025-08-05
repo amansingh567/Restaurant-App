@@ -1,25 +1,21 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { MdOutlineStarPurple500, MdOutlineStarHalf } from "react-icons/md";
-import { FaCartPlus } from "react-icons/fa";
-import Menu from "../components/Menu";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartProduct } from "../redux/cartSlice";
 import { getAllProductItems } from "../utils/firebaseFunctions";
 import { setProductItem } from "../redux/productSlice";
 import RenderFilter from "../components/renderFilter";
 import Loading from "../utils/Loading";
 
+
 const MenuStatic = () => {
   const dispatch = useDispatch();
   const productItem = useSelector((state) => state.productItem.productItem);
   const productLoading = useSelector(state => state.productItem.productLoading)
+
   useEffect(() => {
     (async () => {
       try {
         const data = await getAllProductItems();
-        // console.log("data - ", data);
-        setRenderProducts(data)
+        setProducts(data)
         dispatch(setProductItem(data));
       } catch (error) {
         console.log(error);
@@ -28,31 +24,17 @@ const MenuStatic = () => {
 
   }, []);
 
-  
-  //   const params = useParams()
-  const navigate = useNavigate();
-
-  const data = productItem.filter(
-    (product) => product.id == "1719488732134",
-    []
-  )[0];
-  // console.log(productItem);
-
-  const cartProduct = useSelector((state) => state.cartProduct);
-
   const [inputSearch,setInputSearch] = useState('');
-const [renderProducts,setRenderProducts] = useState([])
-// console.log(renderProducts)
-// setRenderProducts(productItem)
-// console.log(inputSearch)
+  const [products,setProducts] = useState([])
+
   const methodForSearch = ()=>{
     if(inputSearch.length > 0){
-      const filteredProducts= renderProducts.filter(product =>product.title.toLowerCase().includes(inputSearch.toLowerCase()));
-      setRenderProducts(filteredProducts)
+      const filteredProducts= products.filter(product =>product.title.toLowerCase().includes(inputSearch.toLowerCase()));
+      setProducts(filteredProducts)
       
     }
     else{
-      setRenderProducts(productItem)
+      setProducts(productItem)
     }
   }
  
@@ -60,7 +42,7 @@ const [renderProducts,setRenderProducts] = useState([])
     <div className="h-full">
       <div class="relative w-full max-w-xl mx-auto bg-white rounded-full">
         <input
-          placeholder="e.g. Blog"
+          placeholder="e.g. chicken, pizza, burger"
           class="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none border-2 border-gray-100  hover:outline-none focus:ring-red-100 focus:border-slate-200"
           type="text"
           name="query"
@@ -95,20 +77,9 @@ const [renderProducts,setRenderProducts] = useState([])
             <Loading/>
           </div>
         )
-        : (
-          // filterData.map((el) => (
-          //   <RenderFilter
-          //     key={el.id+"menu"}
-          //     id={el.id}
-          //     name={el.title}
-          //     img={el.imgURL}
-          //     decs={el.category}
-          //     price={el.price}
-              
-          //   />
-          // ))
-          
-          renderProducts.map((el) => {
+        : 
+        (
+          products.map((el) => {
             return  <RenderFilter
                 key={el.id + "menu"}
                 id={el.id}
@@ -120,8 +91,6 @@ const [renderProducts,setRenderProducts] = useState([])
             })
         )}
       </div>
-     
-      {/* <Menu filterbyProps="all" /> */}
     </div>
   );
 };

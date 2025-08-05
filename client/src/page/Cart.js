@@ -1,31 +1,21 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import EmptyCart from "../components/EmptyCart";
-import { MdOutlineAdd, MdOutlineRemove } from "react-icons/md";
 import CartAddedItem from "../components/CartAddedItem";
-import { Link } from "react-router-dom";
 import PaymentSummary from "../components/PaymentSummary";
-// import {loadStripe} from '@stripe/stripe-js';
 
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { PaymentElement } from "@stripe/react-stripe-js";
-import CheckoutForm from "../components/CheckoutForm";
 import toast from 'react-hot-toast';
 
 
 const Cart = () => {
   const user = useSelector((state) => state.user);
-  console.log(user.email)
-
   const cartProduct = useSelector((state) => state.cartProduct);
-  // console.log(cartProduct);
 
   const cartTotal = cartProduct.cartProductItem.reduce(
     (acc, curr) => acc + curr.total,
     0
   );
-  const deliveryCharge = 0;
+  const deliveryCharge = cartTotal > 500 ? 0 : 50;
   const Total = cartTotal + deliveryCharge;
 
 /********** */
@@ -33,29 +23,26 @@ const Cart = () => {
 const handlePayment = async(e)=>{
   const stripeURL = process.env.REACT_APP_BACKEND_URL+'/create-checkout-session'
   e.preventDefault()
-  if(user.email){
-  console.log("fetc")
-  const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-  const res = await fetch(stripeURL,{
-      method : "POST",
-      headers : {
-        'content-type' : "application/json",
-      },
-      body : JSON.stringify(cartProduct.cartProductItem)
-  })
+    if(user.email){
+    // console.log("fetc")
+    const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+    const res = await fetch(stripeURL,{
+        method : "POST",
+        headers : {
+          'content-type' : "application/json",
+        },
+        body : JSON.stringify(cartProduct.cartProductItem)
+    })
 
-  if(res.statusCode === 500) return ;
+    if(res.statusCode === 500) return ;
 
-  const data = await res.json()
-  console.log(data)
-  toast("Redirect to payment gateway")
-  stripePromise.redirectToCheckout({sessionId : data})
-  }
+    const data = await res.json()
+    toast("Redirect to payment gateway")
+    stripePromise.redirectToCheckout({sessionId : data})
+    }
   else{
     toast("your are not login!!")
   }
-
-
 }
 /***** */
 

@@ -1,4 +1,4 @@
-import {collection, doc,orderBy,query,setDoc,getDocs} from "firebase/firestore"
+import {doc,setDoc} from "firebase/firestore"
 import { firestore } from "../firebase.config"
 import axios from "axios"
 
@@ -7,13 +7,14 @@ import axios from "axios"
 export const saveProductItem = async(productData)=>{
     try {
     
-    await setDoc(doc(firestore,"productItem",`${Date.now()}`),productData,{
-        merge : true
-    })
+        await setDoc(doc(firestore,"productItem",`${Date.now()}`),productData,{
+            merge : true
+        })
         
-} catch (error) {
-        
-}
+    } 
+    catch (error) {
+        console.log(error)
+    }
 }
 
 
@@ -21,7 +22,9 @@ export const saveProductItem = async(productData)=>{
 export const getAllProductItems = async()=>{
     
     try {
-        const res = await axios.get(process.env.REACT_APP_BACKEND_URL+'/product');
+        const res = await axios.get(process.env.REACT_APP_BACKEND_URL+'/product',{validateStatus: (status) => {
+            return status < 500; // Accept all status codes less than 500
+        }});
         // console.log(res)
         return res.data;
     } catch (error) {
